@@ -195,9 +195,9 @@ export default function CompanyReportPage() {
       document.body.style.overflow = "hidden";
       setDownloadingStarted(true);
       const originalWidth = element.style.width; // Save original width
-      // const originaldisplay = element.style.display; // Save original display
+      const originaldisplay = element.style.display; // Save original display
 
-      // element.style.display = "block";
+      element.style.display = "block";
 
       // Find the table wrapper (or the specific content you want to export)
       const allElements = element.querySelectorAll("*");
@@ -252,14 +252,13 @@ export default function CompanyReportPage() {
           pdf.setFontSize(12); // Set font size for text
         })
         .save()
-        .finally(() => {
-          element.style.width = originalWidth;
-        });
+        
+        element.style.width = originalWidth;
 
       // Restore styles after PDF generation
-      // document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto";
       // element.style.width = originalWidth;
-      // element.style.display = originaldisplay;
+      element.style.display = originaldisplay;
       setDownloadingStarted(false);
     } catch (error) {
       console.error("Error while exporting PDF:", error);
@@ -311,7 +310,6 @@ export default function CompanyReportPage() {
       // Default markdown rendering for other sections
       return (
         <div className="prose prose-lg max-w-none">
-          hello there
           <ReactMarkdown
           // components={{
           //   h1: ({ children }) => (
@@ -579,8 +577,8 @@ export default function CompanyReportPage() {
                 {children}
               </pre>
             ),
-            a: ({ children }) => (
-              <a className="italic underline text-blue-500">{children}</a>
+            a: ({ children , ...props}) => (
+              <a {...props} className="italic underline text-blue-500"  target="_blank">{children}</a>
             ),
           }}
         >
@@ -879,7 +877,7 @@ export default function CompanyReportPage() {
         </div>
       </div>
 
-      <div id="report-content">
+      <div style={{display:'none'}} id="report-content">
         <div className="min-h-screen bg-gray-50">
           {/* Company Overview Banner */}
           <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
@@ -914,6 +912,7 @@ export default function CompanyReportPage() {
 
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              hello there
               {downloadContent}
             </div>
           </div>
